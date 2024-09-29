@@ -1,6 +1,6 @@
 // src/modules/weather/infrastructure/repository/weather.repository.ts
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service';
+import { PrismaService } from '../../../../shared/services/prisma.service';
 import { SavedWeatherRepository } from '../../domain/interfaces/saved-weather-repository.interface';
 
 @Injectable()
