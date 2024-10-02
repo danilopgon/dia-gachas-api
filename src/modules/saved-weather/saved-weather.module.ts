@@ -1,11 +1,14 @@
 import { Module } from '@nestjs/common';
 import { SavedWeatherController } from './application/controllers/saved-weather.controller';
-import { SavedWeatherService } from './application/saved-weather.service';
+import { SavedWeatherService } from './application/services/saved-weather.service';
 import { PrismaService } from '../../shared/services/prisma.service';
 import { SavedWeatherPrismaRepository } from './infraestructure/repository/saved-weather-prisma.repository';
+import { AemetService } from './application/services/aemet-service.service';
+import { CqrsModule } from '@nestjs/cqrs';
+import { CreateSavedWeatherHandler } from './application/handlers/create-saved-weather.handler';
 
 @Module({
-  imports: [],
+  imports: [CqrsModule],
   controllers: [SavedWeatherController],
   providers: [
     SavedWeatherService,
@@ -14,6 +17,8 @@ import { SavedWeatherPrismaRepository } from './infraestructure/repository/saved
       provide: 'SavedWeatherRepository',
       useClass: SavedWeatherPrismaRepository,
     },
+    AemetService,
+    CreateSavedWeatherHandler,
   ],
 })
-export class SavedWeather {}
+export class SavedWeatherModule {}

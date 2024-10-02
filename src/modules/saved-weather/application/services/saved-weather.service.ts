@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { SavedWeatherServiceInterface } from './interfaces/saved-weather.service.interface';
+import { SavedWeatherServiceInterface } from '../interfaces/saved-weather.service.interface';
 
 @Injectable()
 export class SavedWeatherService implements SavedWeatherServiceInterface {
