@@ -13,12 +13,10 @@ export class CreateSavedWeatherHandler
   ) {}
 
   async execute(command: CreateSavedWeatherCommand): Promise<any> {
-    console.log(command);
-    //TODO: Write the logic to create a saved weather
-    // const { townCode, provinceCode } = command;
-    // return this.weatherService.createWeather({
-    //   townCode,
-    //   provinceCode,
-    // });
+    const { townCode, provinceCode } = command;
+
+    const weather = await this.aemetService.getWeather(townCode, provinceCode);
+
+    return { status: 'ok', data: weather };
   }
 }

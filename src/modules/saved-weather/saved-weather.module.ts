@@ -6,9 +6,10 @@ import { SavedWeatherPrismaRepository } from './infraestructure/repository/saved
 import { AemetService } from './application/services/aemet-service.service';
 import { CqrsModule } from '@nestjs/cqrs';
 import { CreateSavedWeatherHandler } from './application/handlers/create-saved-weather.handler';
+import { HttpModule } from '@nestjs/axios';
 
 @Module({
-  imports: [CqrsModule],
+  imports: [CqrsModule, HttpModule],
   controllers: [SavedWeatherController],
   providers: [
     SavedWeatherService,
