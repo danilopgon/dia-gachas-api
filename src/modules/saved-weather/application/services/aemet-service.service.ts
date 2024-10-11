@@ -31,13 +31,18 @@ export class AemetService {
   }
 
   private simplifyData(weatherData: any) {
-    return weatherData[0].prediccion.dia.splice(0, 3).map((day) => {
-      const minTemperature = day.temperatura.minima;
-      const maxTemperature = day.temperatura.maxima;
-
-      const maxProbPrecipitacion = Math.max(
-        ...day.probPrecipitacion.map((p) => p.value),
+    return weatherData[0].prediccion.dia.splice(0, 2).map((day) => {
+      const noonTemperature = day.temperatura.dato.find((t) => t.hora === 12);
+      const afternoonTemperature = day.temperatura.dato.find(
+        (t) => t.hora === 18,
       );
+
+      const launchTemperature =
+        (noonTemperature.value + afternoonTemperature.value) / 2;
+
+      const launchTimeRainProbability = day.probPrecipitacion.find(
+        (p) => p.periodo === '12-18',
+      ).value;
 
       const estadoCielo = day.estadoCielo.find((e) => e.descripcion) || {
         descripcion: 'Unknown',
@@ -45,9 +50,8 @@ export class AemetService {
 
       return {
         date: day.fecha,
-        minTemperature: minTemperature,
-        maxTemperature: maxTemperature,
-        maxRainProbability: maxProbPrecipitacion,
+        launchTemperature: launchTemperature,
+        launchTimeRainProbability: launchTimeRainProbability,
         skyStatus: estadoCielo.descripcion,
       };
     });
@@ -55,14 +59,14 @@ export class AemetService {
 
   determineGachasDay(weatherData: any[]) {
     return weatherData.map((day) => {
-      const isGachasDay =
-        day.maxTemperature < 22 &&
-        day.maxRainProbability > 30 &&
-        /(nuboso|nublados|lluvia|lluvias)/i.test(day.skyStatus);
+      const isDayForGachas =
+        day.launchTemperature < 20 &&
+        day.launchTimeRainProbability > 30 &&
+        /(nuboso|nubosos|nublados|lluvia|lluvias)/i.test(day.skyStatus);
 
       return {
         ...day,
-        isGachasDay: isGachasDay,
+        isDayForGachas: isDayForGachas,
       };
     });
   }
