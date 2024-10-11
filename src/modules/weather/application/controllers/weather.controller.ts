@@ -20,10 +20,12 @@ export class WeatherController {
     }
   }
 
-  @Get(':provinceCode/:townCode')
+  @Get(':code')
   async getByWeatherDataParams(@Param() params: any) {
     try {
-      const { townCode, provinceCode } = params;
+      const { code } = params;
+      const provinceCode = code.substring(0, 2);
+      const townCode = code.substring(2);
 
       const weather = await this.aemetService.getWeather(
         townCode,
