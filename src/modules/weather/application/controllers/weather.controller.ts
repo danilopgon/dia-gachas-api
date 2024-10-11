@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { WeatherDto } from '../models/weather-dto';
-import { AemetService } from '../services/aemet-.service';
+import { AemetService } from '../services/aemet.service';
 
 @Controller('weather')
 export class WeatherController {
