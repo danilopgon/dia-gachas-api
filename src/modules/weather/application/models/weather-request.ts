@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsString } from 'class-validator';
 
-export class WeatherDto {
+export class WeatherRequest {
   @IsString()
   @IsNotEmpty()
   townCode: string;
