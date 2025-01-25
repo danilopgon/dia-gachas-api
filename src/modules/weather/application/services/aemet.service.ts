@@ -26,6 +26,8 @@ export class AemetService {
       this.httpService.get(response.data.datos),
     );
 
+    console.log(weatherData.data);
+
     const simplifiedData: SimplifiedData[] = this.simplifyData(
       weatherData.data,
     );
@@ -56,6 +58,8 @@ export class AemetService {
       };
 
       return {
+        town: weatherData[0].nombre,
+        province: weatherData[0].provincia,
         date: day.fecha,
         launchTemperature: launchTemperature,
         launchTimeRainProbability: launchTimeRainProbability,
@@ -64,7 +68,7 @@ export class AemetService {
     });
   }
 
-  determineGachasDay(simplifiedData: SimplifiedData[]) {
+  determineGachasDay(simplifiedData: SimplifiedData[]): SimplifiedData[] {
     return simplifiedData.map((day) => {
       const isDayForGachas =
         day.launchTemperature < 20 &&
