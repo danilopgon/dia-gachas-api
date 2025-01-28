@@ -73,7 +73,7 @@ export class AemetService {
       const isDayForGachas =
         day.launchTemperature < 20 &&
         day.launchTimeRainProbability > 30 &&
-        /(nuboso|nubosos|nublados|lluvia|lluvias)/i.test(day.skyStatus);
+        /(nuboso|nubosos|nublados|lluvia|lluvias|tormenta|tormentas)/i.test(day.skyStatus);
 
       return {
         ...day,
